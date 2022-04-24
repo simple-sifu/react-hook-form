@@ -3,7 +3,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function FunctionalAstronaut() {
+function App() {
   const [astronauts, setAstronauts] = useState([]);
 
   // setting the dependencies array in useEffect to an empty array
@@ -34,4 +34,4 @@ function FunctionalAstronaut() {
   );
 }
 
-export default FunctionalAstronaut;
+export default App;
