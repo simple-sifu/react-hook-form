@@ -3,36 +3,82 @@ import React from 'react';
 import './App.css';
 
 import { useForm } from "react-hook-form";
+import { ErrorMessage } from '@hookform/error-message';
 
 function App() {
 
-  const { register, handleSubmit } = useForm();
+  const { 
+    register, 
+    handleSubmit,
+    formState: { errors }  
+  } = useForm();
 
-  const onSubmit = (data) => console.log(JSON.stringify(data));
+
+  console.log(errors);
 
   return (
     <div className="app">
 
       <h4 className="text-center">Registration Form</h4>
       
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit((data) => {
+        console.log(data);
+      })}
+      >
 
         <div className="form-group">
           <label>Full Name</label>
-          <input type="text" className="form-control font-weight-bold" placeholder="Your Name" {...register("fullName")} name="fullName"/>
+          <input 
+          className="form-control font-weight-bold" placeholder="Your Name" 
+            {...register("fullName", {
+              required: "fullName is required"
+            })} 
+          />
+          <ErrorMessage errors={errors} name="fullName"/>
         </div>
 
         <div className="form-group">
           <label>Email Address</label>
-          <input type="text" className="form-control font-weight-bold" placeholder="Enter email" {...register("email")} name="email"/>
+          <input 
+            className="form-control font-weight-bold" 
+            placeholder="Enter email" 
+            {...register(
+              "email", 
+              {
+                required:"email address is required", 
+                pattern:{
+                  value: /\S+@\S+\.\S+/,
+                  message: 'email address format is wrong'
+                }
+              }
+             )
+            } 
+          />
+          <ErrorMessage errors={errors} name="email"/>
         </div>
 
         <div className="form-group">
           <label>Password</label>
-          <input type="password" className="form-control font-weight-bold" placeholder="Password" {...register("password")} name="password"/>
+          <input 
+            className="form-control font-weight-bold" 
+            placeholder="Password" 
+            {...register(
+              "password", 
+              {
+                required:"password is required",
+                minLength: {
+                  value: 6, 
+                  message: 'Min Length required is 4 characters'
+                }
+              }
+             )
+            }
+          />
+          <ErrorMessage errors={errors} name="password" />
         </div>
 
-        <button type="submit" className="btn btn-primary text-center">Register</button>
+
+        <input type="submit" className="btn btn-primary text-center" value="Register"/>
 
       </form>
     </div>
