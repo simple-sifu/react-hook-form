@@ -1,35 +1,29 @@
-import { useState, useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const [astronauts, setAstronauts] = useState([]);
-
-  // setting the dependencies array in useEffect to an empty array
-  // ensures this fetch request only runs once instead of infinitely
-  useEffect(() => {
-    fetch('http://api.open-notify.org/astros.json')
-      .then(res => res.json())
-      .then(data => setAstronauts(data.people))
-      .catch(err => console.error(err))
-  }, []);
-
-  // create a list node to add to the DOM
-  const astronautList = astronauts.map((astronaut, index) => (
-    <li key={`astro-${index}`}>
-      <p>{astronaut.name} is flying in the {astronaut.craft} spacecraft</p>
-    </li>
-  ));
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <ul>
-          {astronautList}
-        </ul>
-      </header>
+    <div className="app">
+      <h4 className="text-denter">Registration Form</h4>
+      <form>
+        <div className="form-group">
+          <label>Full Name</label>
+          <input type="text" className="form-control font-weight-bold" placeholder="Your Name" />
+        </div>
+
+        <div className="form-group">
+          <label>Email Address</label>
+          <input type="text" className="form-control font-weight-bold" placeholder="Enter email" />
+        </div>
+
+        <div className="form-group">
+          <label>Password</label>
+          <input type="password" className="form-control font-weight-bold" placeholder="Password" />
+        </div>
+
+      </form>
     </div>
   );
 }
