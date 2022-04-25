@@ -3,15 +3,26 @@ import React from 'react';
 import './App.css';
 
 import { useForm } from "react-hook-form";
-import { ErrorMessage } from '@hookform/error-message';
+
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 function App() {
+
+  let schema = yup.object().shape({
+    fullName: yup.string().required(),
+    email: yup.string().required().email(),
+    password: yup.string().required().min(6)
+  })
 
   const { 
     register, 
     handleSubmit,
     formState: { errors }  
-  } = useForm();
+  } = useForm({
+    mode: "onTouched",
+    resolver: yupResolver(schema),
+  });
 
 
   console.log(errors);
@@ -30,11 +41,9 @@ function App() {
           <label>Full Name</label>
           <input 
           className="form-control font-weight-bold" placeholder="Your Name" 
-            {...register("fullName", {
-              required: "fullName is required"
-            })} 
+            {...register("fullName")} 
           />
-          <ErrorMessage errors={errors} name="fullName"/>
+          {errors.fullName?.type === 'required' && <p>Name is required</p> }
         </div>
 
         <div className="form-group">
@@ -43,18 +52,12 @@ function App() {
             className="form-control font-weight-bold" 
             placeholder="Enter email" 
             {...register(
-              "email", 
-              {
-                required:"email address is required", 
-                pattern:{
-                  value: /\S+@\S+\.\S+/,
-                  message: 'email address format is wrong'
-                }
-              }
+              "email"
              )
             } 
           />
-          <ErrorMessage errors={errors} name="email"/>
+          {(errors.email?.type === 'required') && <p>Email is required</p> }
+          {(errors.email?.type === 'email') && <p>Email pattern is not correct</p> }
         </div>
 
         <div className="form-group">
@@ -63,18 +66,12 @@ function App() {
             className="form-control font-weight-bold" 
             placeholder="Password" 
             {...register(
-              "password", 
-              {
-                required:"password is required",
-                minLength: {
-                  value: 6, 
-                  message: 'Min Length required is 4 characters'
-                }
-              }
+              "password"
              )
             }
           />
-          <ErrorMessage errors={errors} name="password" />
+           {(errors.password?.type === 'required') && <p>Password is required</p> }
+           {(errors.password?.type === 'min') && <p>Password is too short</p> }
         </div>
 
 
