@@ -18,6 +18,7 @@ function App() {
   const { 
     register, 
     handleSubmit,
+    setValue,
     formState: { errors }  
   } = useForm({
     mode: "onTouched",
@@ -31,6 +32,9 @@ function App() {
 
 
   console.log(errors);
+  setValue("fullName","Donald Han", {
+    shouldValidate: true}
+  );
 
   return (
     <div className="app">
