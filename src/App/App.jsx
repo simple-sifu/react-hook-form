@@ -22,6 +22,11 @@ function App() {
   } = useForm({
     mode: "onTouched",
     resolver: yupResolver(schema),
+    defaultValues: {
+      fullName: 'Tommy Han',
+      email: 'than@gmail.com',
+      password: 'dsafas',
+    },
   });
 
 
