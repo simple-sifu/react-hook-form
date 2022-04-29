@@ -30,40 +30,38 @@ function App() {
     },
   });
 
-
-  console.log(errors);
-  setValue("fullName","Donald Han", {
-    shouldValidate: true}
-  );
+  setValue("fullName","Donald Han");
+  const submitForm = (data) => {
+    console.log(data)
+  }
 
   return (
     <div className="app">
 
       <h4 className="text-center">Registration Form</h4>
       
-      <form onSubmit={handleSubmit((data) => {
-        console.log(data);
-      })}
-      >
+      <form onSubmit={handleSubmit(submitForm)}>
 
         <div className="form-group">
           <label>Full Name</label>
-          <input 
+          <input type="text"
           className="form-control font-weight-bold" placeholder="Your Name" 
             {...register("fullName")} 
+            name="fullName"
           />
           {errors.fullName?.type === 'required' && <p>Name is required</p> }
         </div>
 
         <div className="form-group">
           <label>Email Address</label>
-          <input 
+          <input type="text"
             className="form-control font-weight-bold" 
             placeholder="Enter email" 
             {...register(
               "email"
              )
             } 
+            name="email"
           />
           {(errors.email?.type === 'required') && <p>Email is required</p> }
           {(errors.email?.type === 'email') && <p>Email pattern is not correct</p> }
@@ -71,13 +69,14 @@ function App() {
 
         <div className="form-group">
           <label>Password</label>
-          <input 
+          <input type="text" 
             className="form-control font-weight-bold" 
             placeholder="Password" 
             {...register(
               "password"
              )
             }
+            name="password"
           />
            {(errors.password?.type === 'required') && <p>Password is required</p> }
            {(errors.password?.type === 'min') && <p>Password is too short</p> }
