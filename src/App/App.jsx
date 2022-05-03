@@ -4,15 +4,15 @@ import './App.css';
 
 import { useForm } from "react-hook-form";
 
-import * as yup from 'yup';
+import { object, string} from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 function App() {
 
-  let schema = yup.object().shape({
-    fullName: yup.string().required(),
-    email: yup.string().required().email(),
-    password: yup.string().required().min(6)
+  let schema = object().shape({
+    fullName: string().required(),
+    email: string().required().email(),
+    password: string().required().min(6)
   })
 
   const { 
@@ -30,7 +30,9 @@ function App() {
     },
   });
 
+  console.log("reloading App");
   setValue("fullName","Donald Han");
+
   const submitForm = (data) => {
     console.log(data)
   }
@@ -47,7 +49,6 @@ function App() {
           <input type="text"
           className="form-control font-weight-bold" placeholder="Your Name" 
             {...register("fullName")} 
-            name="fullName"
           />
           {errors.fullName?.type === 'required' && <p>Name is required</p> }
         </div>
@@ -61,7 +62,6 @@ function App() {
               "email"
              )
             } 
-            name="email"
           />
           {(errors.email?.type === 'required') && <p>Email is required</p> }
           {(errors.email?.type === 'email') && <p>Email pattern is not correct</p> }
@@ -76,7 +76,6 @@ function App() {
               "password"
              )
             }
-            name="password"
           />
            {(errors.password?.type === 'required') && <p>Password is required</p> }
            {(errors.password?.type === 'min') && <p>Password is too short</p> }
