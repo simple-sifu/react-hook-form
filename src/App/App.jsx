@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 function App() {
 
-  let schema = object().shape({
+  let schema = object({
     fullName: string().required(),
     email: string().required().email(),
     password: string().required().min(6)
